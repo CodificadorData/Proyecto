@@ -7,6 +7,10 @@ class LoginViewController: UIViewController {
     var lista = [Reuniones]()
     
     
+    @IBAction func registrarButton(_ sender: Any) {
+        let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegistroUsuariosViewController") as! RegistroUsuariosViewController
+        navigationController?.pushViewController(vc, animated: true)
+    }
     
     
     @IBAction func accederButton(_ sender: Any) {
@@ -21,7 +25,7 @@ class LoginViewController: UIViewController {
 //                    self.navigationController?.pushViewController(MisReunionesViewController(email: result.user.email!), animated: true)
                 }
                 else{
-                    let Alert = UIAlertController(title: "Error", message: "Error al registrar", preferredStyle: .alert)
+                    let Alert = UIAlertController(title: "Error", message: "Error al logearse", preferredStyle: .alert)
                     Alert.addAction(UIAlertAction(title: "Aceptar", style: .default ))
                     self.present(Alert, animated: true, completion: nil)
                 }

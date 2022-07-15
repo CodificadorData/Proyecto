@@ -46,47 +46,15 @@ class RegistrarReunionesViewController: UIViewController {
     
     
     @IBAction func listarButton(_ sender: UIButton){
-//        let reunionStoryBoard = UIStoryboard(name: "Main", bundle: nil)
-//        let reunionesView = reunionStoryBoard.instantiateViewController(withIdentifier: "MisReunionesViewController") as? MisReunionesViewController
-//        reunionesView?.correo = correo
         navigationController?.popViewController(animated: true)
     }
     
-    
-    
-//    @IBAction func listaButton(_ sender: UIButton) {
-//        print("se presionoooooooooooooooooooooooooo")
-////
-////       let storyboard = UIStoryboard(name: "Main", bundle: nil)
-////        guard let viewController = storyboard.instantiateViewController(withIdentifier: "MisReunionesViewController") as? MisReunionesViewController else {
-////            print("no se encontró viewcontroller")
-////            return
-////                     }
-////       self.navigationController?.pushViewController(viewController, animated: true)
-//        self.navigationController?.popViewController(animated: true)
-////        //    }
-    
-    
-//    @IBAction func listaButton(_ sender: UIButton) {
-//                print("GAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-////                let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MisReunionesViewController") as! MisReunionesViewController
-////               let reunionStoryBoard = UIStoryboard(name: "Main", bundle: nil)
-////   guard let reunionesView = reunionStoryBoard.instantiateViewController(withIdentifier: "MisReunionesViewController") as? MisReunionesViewController else {
-////                                   fatalError("error")
-////                                }
-////        reunionesView.correo = self.correo
-////                self.navigationController?.popViewController(animated: true)
-//                self.present(MisReunionesViewController(), animated: true, completion: nil)
-//
-//    }
-    
-    
-
     @IBAction func guardarButton(_ sender: Any) {
-        trabajador = (trabajadorSegment.titleForSegment(at: trabajadorSegment.selectedSegmentIndex) as String?)!
         
+        trabajador = (trabajadorSegment.titleForSegment(at: trabajadorSegment.selectedSegmentIndex) as String?)!
         let campo : [String:Any] = ["dia":dia,"hora": hora,"trabajador":trabajador,"estado":estado,"correo":correo]
         db.collection("Reuniones").addDocument(data: campo) { (error) in
+           
             if let error=error{
                 print("fallo al guardar", error.localizedDescription)
             }
@@ -94,6 +62,7 @@ class RegistrarReunionesViewController: UIViewController {
                 self.navigationController?.popViewController(animated: true)
             }
         }
+        
     }
     
     
@@ -117,10 +86,6 @@ class RegistrarReunionesViewController: UIViewController {
     }
 
 }
-
-
-
-
 
 extension RegistrarReunionesViewController: UIPickerViewDelegate,UIPickerViewDataSource{
     
@@ -166,7 +131,5 @@ extension RegistrarReunionesViewController: UIPickerViewDelegate,UIPickerViewDat
             print("No seleccionaste nadaa")
         }
     }
-    
-
     
 }

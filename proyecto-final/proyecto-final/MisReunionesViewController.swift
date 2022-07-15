@@ -19,15 +19,15 @@ class MisReunionesViewController: UIViewController {
     var db:Firestore!
     var correo :String = ""
     
-    @IBOutlet weak var tabla: UITableView!
+   
     
+    @IBOutlet weak var mitabla: UITableView!
     
     @IBAction func backButton(_ sender: Any) {
         
         let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "r") as! RegistrarReunionesViewController
         vc.correo = correo
         self.navigationController?.pushViewController(vc, animated: true)
-//        self.present(vc, animated: true, completion: nil)
         
     }
     @IBAction func cerrarsSesionButton(_ sender: Any) {
@@ -40,25 +40,20 @@ class MisReunionesViewController: UIViewController {
                 }
     }
     
-    
-//    init(email:String){
-//        self.correo = email
-//        super.init(nibName: nil, bundle: nil)
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        db = Firestore.firestore()
-        tabla.delegate = self
-        tabla.dataSource = self
-        
         print("###########################")
         print(correo)
+        
+        db = Firestore.firestore()
+        mitabla.delegate = self
+        mitabla.dataSource = self
+        
+
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         traerDatos()
@@ -74,12 +69,10 @@ extension MisReunionesViewController: UITableViewDelegate,UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tabla.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CellTableViewCell
+        let cell = mitabla.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! CellTableViewCell
         
         let reunion = lista[indexPath.row]
-//        cell.textLabel?.text = reunion.dia
-//        cell.detailTextLabel?.text = reunion.hora
-//        cell.detailTextLabel?.text = reunion.estado
+
         cell.lblDia.text = reunion.dia
         cell.lblHora.text = reunion.hora
         cell.lblTrabajador.text = reunion.trabajador
@@ -106,7 +99,7 @@ extension MisReunionesViewController: UITableViewDelegate,UITableViewDataSource{
                     let reunion = Reuniones(dia: dia, hora: hora, id:id,estado: estado,trabajador:trabajador,correo: email)
                     self.lista.append(reunion)
                     DispatchQueue.main.async {
-                        self.tabla.reloadData()
+                        self.mitabla.reloadData()
                     }
                 }
             }

@@ -17,24 +17,30 @@ class RegistroUsuariosViewController: UIViewController {
         
         if let email = txtCorreo.text, let contrasena = txtContrasena.text{
             Auth.auth().createUser(withEmail: email, password: contrasena) { (result, error) in
+                
                 if let result = result, error == nil{
-                    self.navigationController?.pushViewController(MisReunionesViewController(), animated: true)
                     
                     let apellido = self.txtApellidos.text
                     let nombres = self.txtNombres.text
                     let telefono = self.txtTelefono.text
                     
                     let campo : [String:Any] = ["apellido":apellido,"contrasena": contrasena,"correo":email,"nombre":nombres,"telefono":telefono]
-                    self.db.collection("Reuniones").addDocument(data: campo) { (error) in
+                    self.db.collection("Usuarios").addDocument(data: campo) { (error) in
                         if let error=error{
                             print("fallo al guardar", error.localizedDescription)
                         }
                         else{
-            //                self.navigationController?.pushViewController(MisReunionesViewController(), animated: true)
+                            
+                            print("AQUIIIIIIIIIIIIIIIIIIIIII")
+                            
+                            let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MisReunionesViewController") as! MisReunionesViewController
+                            vc.correo = email
+                            self.navigationController?.pushViewController(vc, animated: true)
+
                         }
                     }
-                    
                 }
+                
                 else{
                     let Alert = UIAlertController(title: "Error", message: "Error al registrar", preferredStyle: .alert)
                     Alert.addAction(UIAlertAction(title: "Aceptar", style: .default ))
